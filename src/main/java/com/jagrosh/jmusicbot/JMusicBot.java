@@ -18,6 +18,7 @@ package com.jagrosh.jmusicbot;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import com.jagrosh.jdautilities.examples.command.*;
+import com.jagrosh.jmusicbot.commands.other.PubgCmd;
 import com.jagrosh.jmusicbot.commands.admin.*;
 import com.jagrosh.jmusicbot.commands.dj.*;
 import com.jagrosh.jmusicbot.commands.general.*;
@@ -133,7 +134,9 @@ public class JMusicBot
                         new SetgameCmd(bot),
                         new SetnameCmd(bot),
                         new SetstatusCmd(bot),
-                        new ShutdownCmd(bot)
+                        new ShutdownCmd(bot),
+
+                        new PubgCmd(bot)
                 );
         if(config.useEval())
             cb.addCommand(new EvalCmd(bot));

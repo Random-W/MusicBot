@@ -33,9 +33,6 @@ public class PubgCmd extends OtherCommand {
         this.name = "pubg";
         this.arguments = "<telemetry>";
         this.help = "pubg management";
-        this.children = new OtherCommand[]{
-                new TelemetryCommand(bot)
-        };
         this.builder = new Paginator.Builder()
                 .setColumns(1)
                 .setFinalAction(m -> {try{m.clearReactions().queue();}catch(PermissionException ignore){}})
@@ -45,78 +42,13 @@ public class PubgCmd extends OtherCommand {
                 .setEventWaiter(bot.getWaiter())
                 .setTimeout(1, TimeUnit.MINUTES);
         this.pubgClient = new PubgClient();
+        this.children = new OtherCommand[]{
+                new TelemetryCommand(bot, this.builder, this.pubgClient)
+        };
     }
 
     @Override
     public void doCommand(CommandEvent event) {
         event.reply("help");
-    }
-
-    public class TelemetryCommand extends OtherCommand
-    {
-        public TelemetryCommand(Bot bot)
-        {
-            super(bot);
-            this.name = "telemetry";
-            this.help = "Checks telemetry of a match";
-            this.arguments = "<matchId>";
-            this.guildOnly = false;
-        }
-
-        @Override
-        public void doCommand(CommandEvent event)
-        {
-            String matchId = event.getArgs().replaceAll("\\s+", "_");
-
-            Telemetry telemetry = getTelemetryFromMatchId(matchId, event);
-
-            if (telemetry == null){
-                return;
-            }
-
-            System.out.println(telemetry.getTelemetryEvents().get(telemetry.getTelemetryEvents().size() - 1).getTimestamp());
-
-            List<TelemetryEventGroup> processedTelemetry = TelemetryProcessor.processTelemetry(telemetry);
-
-            List<String> visualizedTelemetry = TelemetryVisualizer.visualizeTelemetry(processedTelemetry);
-            builder.setText((i1,i2) -> "Telemetry for match " + matchId)
-                    .setItems(visualizedTelemetry.toArray(new String[0]))
-                    .setUsers(event.getAuthor())
-                    .setColor(event.getSelfMember().getColor());
-            builder.build().paginate(event.getChannel(), 1);
-        }
-
-        private Telemetry getTelemetryFromMatchId(String matchId, CommandEvent event){
-            String telemetryUrl = null;
-            try {
-                List<Entity> entities = pubgClient.getMatch(PlatformRegion.PC_NA, matchId).getIncluded();
-                for (Entity entity: entities) {
-                    if (!entity.getType().equalsIgnoreCase("asset")){
-                        continue;
-                    }
-
-                    Asset asset = (Asset) entity;
-                    telemetryUrl = asset.getAssetAttributes().getUrl();
-                }
-            } catch (PubgClientException e) {
-                e.printStackTrace();
-                event.reply("Unable to get match: " + e.getMessage());
-                return null;
-            }
-
-            if (telemetryUrl == null){
-                event.reply("No telemetry is found in match");
-                return null;
-            }
-
-            try {
-                Telemetry telemetry = pubgClient.getTelemetry(telemetryUrl);
-                return telemetry;
-            } catch (PubgClientException e) {
-                e.printStackTrace();
-                event.reply("Unable to get telemetry: " + e.getMessage());
-                return null;
-            }
-        }
     }
 }

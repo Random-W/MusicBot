@@ -79,7 +79,7 @@ public class TelemetryProcessor {
         } else if (event.getType().equalsIgnoreCase(TelemetryEventNames.LogPlayerTakeDamageEventName)) {
             LogPlayerTakeDamage takeDamageEvent = (LogPlayerTakeDamage) event;
 
-            return takeDamageEvent.getAttacker() != null && (TelemetryProcessor.playersOfInterest.contains(takeDamageEvent.getAttacker().getName())
+            return (takeDamageEvent.getAttacker() != null) && (TelemetryProcessor.playersOfInterest.contains(takeDamageEvent.getAttacker().getName())
                     || TelemetryProcessor.playersOfInterest.contains(takeDamageEvent.getVictim().getName()));
         } else if (event.getType().equalsIgnoreCase(TelemetryEventNames.LogMatchStartEventName)){
             return true;

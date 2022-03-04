@@ -13,6 +13,7 @@ import com.jagrosh.jmusicbot.Pubg.TelemetryEventGroup;
 import com.jagrosh.jmusicbot.Pubg.TelmetryProcessor.TelemetryProcessor;
 import com.jagrosh.jmusicbot.Pubg.TelmetryVisualizer.TelemetryVisualizer;
 import com.jagrosh.jmusicbot.commands.OtherCommand;
+import net.dv8tion.jda.api.entities.User;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class TelemetryCommand extends OtherCommand
         List<String> visualizedTelemetry = TelemetryVisualizer.visualizeTelemetry(processedTelemetry);
         builder.setText((i1,i2) -> "Telemetry for match " + matchId)
                 .setItems(visualizedTelemetry.toArray(new String[0]))
-                .setUsers(event.getAuthor())
+                .setUsers(event.getGuild().getMembers().stream().map(member -> member.getUser()).toList().toArray(new User[0]))
                 .setColor(event.getSelfMember().getColor());
         builder.build().paginate(event.getChannel(), 1);
     }

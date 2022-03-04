@@ -21,6 +21,16 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>snapshots-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
     
     <dependencies>
@@ -28,6 +38,11 @@
             <groupId>net.dv8tion</groupId> 
             <artifactId>JDA</artifactId> 
             <version>4.3.0_324</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.mautini</groupId>
+            <artifactId>pubg-java</artifactId>
+            <version>SNAPSHOT</version>
         </dependency>
         <!-- using a fork of this to fix some issues faster -->
         <!-- dependency>
@@ -91,7 +106,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    
+
     <build>
       <plugins>
         <plugin>
@@ -128,6 +143,37 @@
                             </transformer>
                         </transformers>
                     </configuration>
+                </execution>
+            </executions>
+        </plugin>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                  <source>16</source>
+                  <target>16</target>
+              </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-install-plugin</artifactId>
+            <version>2.5.2</version>
+            <executions>
+                <execution>
+                    <id>install-external</id>
+                    <phase>clean</phase>
+                    <configuration>
+                        <file>${basedir}\..\pubgjava\pubg-java\target\pubg-java-1.0-SNAPSHOT-All.jar</file>
+                        <repositoryLayout>default</repositoryLayout>
+                        <groupId>com.github.mautini</groupId>
+                        <artifactId>pubg-java</artifactId>
+                        <version>SNAPSHOT</version>
+                        <packaging>jar</packaging>
+                        <generatePom>true</generatePom>
+                    </configuration>
+                    <goals>
+                        <goal>install-file</goal>
+                    </goals>
                 </execution>
             </executions>
         </plugin>

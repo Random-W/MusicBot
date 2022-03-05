@@ -1,4 +1,4 @@
-package com.jagrosh.jmusicbot.Pubg;
+package com.jagrosh.jmusicbot.Pubg.Telemetry;
 import com.github.mautini.pubgjava.model.telemetry.event.TelemetryEvent;
 
 

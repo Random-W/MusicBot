@@ -1,10 +1,8 @@
-package com.jagrosh.jmusicbot.Pubg.TelmetryVisualizer;
+package com.jagrosh.jmusicbot.Pubg.Telemetry;
 
 import com.github.mautini.pubgjava.model.telemetry.event.LogPlayerRevive;
 import com.github.mautini.pubgjava.model.telemetry.event.LogPlayerTakeDamage;
 import com.github.mautini.pubgjava.model.telemetry.event.TelemetryEvent;
-import com.jagrosh.jmusicbot.Pubg.TelemetryEventGroup;
-import com.jagrosh.jmusicbot.Pubg.TelemetryEventNames;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;

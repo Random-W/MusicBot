@@ -2,16 +2,15 @@ package com.jagrosh.jmusicbot.commands.other;
 
 import com.github.mautini.pubgjava.api.PubgClient;
 import com.github.mautini.pubgjava.exception.PubgClientException;
-import com.github.mautini.pubgjava.model.PlatformRegion;
 import com.github.mautini.pubgjava.model.asset.Asset;
 import com.github.mautini.pubgjava.model.generic.Entity;
 import com.github.mautini.pubgjava.model.telemetry.Telemetry;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import com.jagrosh.jdautilities.menu.Paginator;
 import com.jagrosh.jmusicbot.Bot;
-import com.jagrosh.jmusicbot.Pubg.TelemetryEventGroup;
-import com.jagrosh.jmusicbot.Pubg.TelmetryProcessor.TelemetryProcessor;
-import com.jagrosh.jmusicbot.Pubg.TelmetryVisualizer.TelemetryVisualizer;
+import com.jagrosh.jmusicbot.Pubg.Telemetry.TelemetryEventGroup;
+import com.jagrosh.jmusicbot.Pubg.Telemetry.TelemetryProcessor;
+import com.jagrosh.jmusicbot.Pubg.Telemetry.TelemetryVisualizer;
 import com.jagrosh.jmusicbot.commands.OtherCommand;
 import net.dv8tion.jda.api.entities.User;
 
@@ -60,7 +59,7 @@ public class TelemetryCommand extends OtherCommand
     private Telemetry getTelemetryFromMatchId(String matchId, CommandEvent event){
         String telemetryUrl = null;
         try {
-            List<Entity> entities = pubgClient.getMatch(PlatformRegion.PC_NA, matchId).getIncluded();
+            List<Entity> entities = pubgClient.getMatch(PubgCmd.platformRegion, matchId).getIncluded();
             for (Entity entity: entities) {
                 if (!entity.getType().equalsIgnoreCase("asset")){
                     continue;

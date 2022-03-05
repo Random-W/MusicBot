@@ -1,4 +1,4 @@
-package com.jagrosh.jmusicbot.Pubg;
+package com.jagrosh.jmusicbot.Pubg.Telemetry;
 
 public class TelemetryEventNames {
 

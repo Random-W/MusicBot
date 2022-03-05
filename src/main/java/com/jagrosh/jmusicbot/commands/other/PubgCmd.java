@@ -36,7 +36,6 @@ public class PubgCmd extends OtherCommand {
         this.builder = new Paginator.Builder()
                 .setColumns(1)
                 .setFinalAction(m -> {try{m.clearReactions().queue();}catch(PermissionException ignore){}})
-                .setItemsPerPage(15)
                 .waitOnSinglePage(false)
                 .showPageNumbers(true)
                 .setEventWaiter(bot.getWaiter())

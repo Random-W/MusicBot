@@ -18,8 +18,10 @@ public class MatchProcessor {
         List<Roster> rosters = catergorizedItems.getLeft();
         List<Participant> participants = catergorizedItems.getRight();
 
+        String participantId = participants.stream().filter(p -> p.getParticipantAttributes().getParticipantStats().getPlayerId().equals(playerId)).toList().get(0).getId();
+
         List<Roster> potentialRosters = rosters.stream().filter(
-                r -> r.getRosterRelationships().getParticipants().getData().stream().map(l -> l.getId()).toList().contains(playerId)).toList();
+                r -> r.getRosterRelationships().getParticipants().getData().stream().map(l -> l.getId()).toList().contains(participantId)).toList();
 
         if (potentialRosters.size() == 0){
             return null;

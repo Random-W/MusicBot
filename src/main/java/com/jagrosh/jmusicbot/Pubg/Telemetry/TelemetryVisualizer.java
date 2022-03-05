@@ -50,7 +50,8 @@ public class TelemetryVisualizer {
         } else if (eventType.equalsIgnoreCase(TelemetryEventNames.LogPlayerTakeDamageEventName)){
             LogPlayerTakeDamage takeDamageEvent = (LogPlayerTakeDamage) event;
             return "`" + timeStr + " " + takeDamageEvent.getAttacker().getName() + " attacked " + takeDamageEvent.getVictim().getName()
-                            + ". " + takeDamageEvent.getDamage() + " " + takeDamageEvent.getDamageTypeCategory() + "`";
+                            + ". " + takeDamageEvent.getDamage() + " "
+                            + (takeDamageEvent.getDamageReason().toString() == "None" ? takeDamageEvent.getDamageTypeCategory() : takeDamageEvent.getDamageReason()) + "`";
         }else{
             return "";
         }

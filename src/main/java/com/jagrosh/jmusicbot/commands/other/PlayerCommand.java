@@ -88,12 +88,16 @@ public class PlayerCommand extends OtherCommand {
 
         List<Match> matchInfo = player.getPlayerRelationships().getMatches().getData().stream().limit(nMatches).collect(Collectors.toList());
 
-        final List<String> matcheViews = new ArrayList<>();
+        final List<String> matchViews = new ArrayList<>();
+        for (int i = 0; i < nMatches; i++) {
+            matchViews.add(null);
+        }
+
 
         int i = 0;
         for (Match m: matchInfo) {
             String matchId = m.getId();
-            this.pubgClientAsync.getMatch(PlayerCommand.getMatchCallback(i, playerId, matcheViews), PubgCmd.platformRegion, matchId);
+            this.pubgClientAsync.getMatch(PlayerCommand.getMatchCallback(i, playerId, matchViews), PubgCmd.platformRegion, matchId);
             i++;
         }
 
@@ -105,19 +109,20 @@ public class PlayerCommand extends OtherCommand {
                 e.printStackTrace();
             }
 
-            if (matcheViews.size() < nMatches){
+            if (matchViews.size() < nMatches){
                 continue;
             }
 
-            if (matcheViews.stream().allMatch(item -> item != null)){
+            if (matchViews.stream().allMatch(item -> item != null)){
                 break;
             }
         }
 
         builder.setText((i1,i2) -> "Matches for player " + playerName + " " + playerId)
-                .setItems(matcheViews.toArray(new String[0]))
+                .setItems(matchViews.toArray(new String[0]))
                 .setUsers(event.getAuthor())
-                .setColor(event.getSelfMember().getColor());
+                .setColor(event.getSelfMember().getColor())
+                .setItemsPerPage(5);;
         builder.build().paginate(event.getChannel(), 1);
     }
 
@@ -142,7 +147,7 @@ public class PlayerCommand extends OtherCommand {
 
             @Override
             public void onError(PubgClientException e) {
-
+                output.set(i, "Cannot get information for this match");
             }
         };
     }

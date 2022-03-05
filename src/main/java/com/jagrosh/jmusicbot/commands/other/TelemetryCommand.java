@@ -51,7 +51,8 @@ public class TelemetryCommand extends OtherCommand
         builder.setText((i1,i2) -> "Telemetry for match " + matchId)
                 .setItems(visualizedTelemetry.toArray(new String[0]))
                 .setUsers(event.getAuthor())
-                .setColor(event.getSelfMember().getColor());
+                .setColor(event.getSelfMember().getColor())
+                .setItemsPerPage(15);
         builder.build().paginate(event.getChannel(), 1);
     }
 

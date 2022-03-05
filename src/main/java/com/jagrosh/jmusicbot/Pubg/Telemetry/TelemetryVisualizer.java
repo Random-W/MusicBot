@@ -52,6 +52,7 @@ public class TelemetryVisualizer {
             return "`" + timeStr + " " + takeDamageEvent.getAttacker().getName() + " attacked " + takeDamageEvent.getVictim().getName()
                             + ". " + takeDamageEvent.getDamage() + " "
                             + (takeDamageEvent.getDamageReason().toString() == "None" ? takeDamageEvent.getDamageTypeCategory() : takeDamageEvent.getDamageReason()) + "`";
+
         }else{
             return "";
         }

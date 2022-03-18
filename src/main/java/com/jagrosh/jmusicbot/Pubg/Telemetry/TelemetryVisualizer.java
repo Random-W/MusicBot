@@ -1,5 +1,6 @@
 package com.jagrosh.jmusicbot.Pubg.Telemetry;
 
+import com.github.mautini.pubgjava.model.telemetry.event.DamageReason;
 import com.github.mautini.pubgjava.model.telemetry.event.LogPlayerRevive;
 import com.github.mautini.pubgjava.model.telemetry.event.LogPlayerTakeDamage;
 import com.github.mautini.pubgjava.model.telemetry.event.TelemetryEvent;
@@ -51,10 +52,14 @@ public class TelemetryVisualizer {
             LogPlayerTakeDamage takeDamageEvent = (LogPlayerTakeDamage) event;
             return "`" + timeStr + " " + takeDamageEvent.getAttacker().getName() + " attacked " + takeDamageEvent.getVictim().getName()
                             + ". " + takeDamageEvent.getDamage() + " "
-                            + (takeDamageEvent.getDamageReason().toString() == "None" ? takeDamageEvent.getDamageTypeCategory() : takeDamageEvent.getDamageReason()) + "`";
+                            + (TelemetryVisualizer.IsDamageReasonMeaningless(takeDamageEvent) ? takeDamageEvent.getDamageTypeCategory() : takeDamageEvent.getDamageReason()) + "`";
 
         }else{
             return "";
         }
+    }
+
+    private static Boolean IsDamageReasonMeaningless(LogPlayerTakeDamage event){
+        return event.getDamageReason() == DamageReason.NONE || event.getDamageReason() == DamageReason.NON_SPECIFIC;
     }
 }
